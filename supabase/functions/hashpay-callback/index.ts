@@ -14,8 +14,28 @@ serve(async (req) => {
   }
 
   try {
-    const payload = await req.json();
+    let payload: any;
+    const contentType = req.headers.get("content-type") || "";
+    
+    if (contentType.includes("application/json")) {
+      payload = await req.json();
+    } else if (contentType.includes("application/x-www-form-urlencoded")) {
+      const text = await req.text();
+      const params = new URLSearchParams(text);
+      payload = Object.fromEntries(params.entries());
+    } else {
+      // Try JSON first, fallback to form-encoded
+      const text = await req.text();
+      try {
+        payload = JSON.parse(text);
+      } catch {
+        const params = new URLSearchParams(text);
+        payload = Object.fromEntries(params.entries());
+      }
+    }
+    
     console.log("Webhook received:", JSON.stringify(payload));
+    console.log("Content-Type:", contentType);
 
     const {
       ResponseCode,
