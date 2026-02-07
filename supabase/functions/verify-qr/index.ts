@@ -19,7 +19,7 @@ serve(async (req) => {
   try {
     const body = await req.json();
     const qr = body?.qr;
-    const ticketId = body?.ticketId;
+    const ticketId = body?.ticketId?.trim();
     const mark = body?.mark === true;
     if (!qr && !ticketId)
       return new Response(

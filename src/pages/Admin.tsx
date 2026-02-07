@@ -76,9 +76,17 @@ const AdminPage = () => {
   };
   // Scan/mark using ticket ID value instead of QR
   const handleScanByTicketId = async (ticketId: string) => {
+    if (!ticketId || ticketId.trim() === "") {
+      toast({
+        title: "Invalid input",
+        description: "Please enter a valid ticket ID",
+        variant: "destructive",
+      });
+      return;
+    }
     try {
       const check = await supabase.functions.invoke("verify-qr", {
-        body: { ticketId },
+        body: { ticketId: ticketId.trim() },
       });
       if (check.error) throw new Error(check.error.message || check.error);
       const info = check.data;
@@ -106,7 +114,7 @@ const AdminPage = () => {
 
       if (info.status === "not_scanned") {
         const mark = await supabase.functions.invoke("verify-qr", {
-          body: { ticketId, mark: true },
+          body: { ticketId: ticketId.trim(), mark: true },
         });
         if (mark.error) throw new Error(mark.error.message || mark.error);
         const m = mark.data;
@@ -697,6 +705,7 @@ const AdminPage = () => {
                       <button
                         onClick={() => handleScanByTicketId(manualQr)}
                         className="btn-primary"
+                        disabled={!manualQr.trim()}
                       >
                         Verify & Mark
                       </button>
