@@ -89,11 +89,15 @@ serve(async (req) => {
           const ticketHtml = `
             <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e5e5e5;">
               <div style="background: linear-gradient(135deg, #6A0DAD, #4a0080); padding: 40px 30px; text-align: center;">
-                <h1 style="color: #ffffff; margin: 0; font-size: 28px; letter-spacing: 2px;">PURPLE NIGHTS</h1>
-                <p style="color: #d4b3ff; margin: 8px 0 0; font-size: 14px;">Valentine's Edition</p>
+                <h1 style="color: #ffffff; margin: 0; font-size: 28px; letter-spacing: 2px;">WOMENS DAY DINNER</h1>
+                <p style="color: #d4b3ff; margin: 8px 0 0; font-size: 14px;">Womens Day Dinner</p>
               </div>
-              <div style="padding: 30px;">
-                <h2 style="color: #6A0DAD; margin-top: 0;">🎟 Your Ticket is Confirmed!</h2>
+              <div style="display:flex;align-items:center;gap:20px;padding:30px;">
+                <div style="flex:0 0 150px;text-align:center;">
+                  <img src="https://quickchart.io/qr?text=${order.qr_code}&size=300" alt="QR code" style="width:130px;height:130px;border-radius:8px;" />
+                </div>
+                <div style="flex:1;">
+                  <h2 style="color: #6A0DAD; margin-top: 0;">🎟 Your Ticket is Confirmed!</h2>
                 <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
                   <tr><td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #666;">Ticket ID</td><td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-weight: bold; text-align: right; font-family: monospace; color: #6A0DAD;">${order.ticket_id}</td></tr>
                   <tr><td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #666;">Name</td><td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-weight: bold; text-align: right;">${order.full_name}</td></tr>
@@ -104,17 +108,21 @@ serve(async (req) => {
                 </table>
                 <div style="background: #f8f0ff; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center;">
                   <p style="color: #666; margin: 0 0 8px; font-size: 13px;">Event Details</p>
-                  <p style="margin: 0; font-weight: bold; color: #333;">📅 February 14, 2026 — 8:00 PM</p>
-                  <p style="margin: 4px 0 0; color: #666;">The Grand Rooftop Lounge, Westlands, Nairobi</p>
+                  <p style="margin: 0; font-weight: bold; color: #333;">📅 March 7, 2026 — 8:00 PM</p>
+                  <p style="margin: 4px 0 0; color: #666;">
+                    <a href="https://www.google.com/maps/place/Radisson+Blu+Hotel,+Nairobi+Upper+Hill/@-1.3015887,36.8173125,16z/data=!4m9!3m8!1s0x182f10e51817c5bd:0x3a9709be7741fa63!5m2!4m1!1i2!8m2!3d-1.3022805!4d36.8167439!16s%2Fg%2F11b6jddqjw?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoKLDEwMDc5MjA2N0gBUAM%3D" target="_blank" style="color: #6A0DAD; text-decoration: none;">
+                      Radisson Blu Hotel, Nairobi Upper Hill
+                    </a>
+                  </p>
                 </div>
                 <p style="color: #999; font-size: 12px; text-align: center; margin-top: 20px;">Please present this email or your Ticket ID at the entrance.</p>
               </div>
             </div>
           `;
           await resend.emails.send({
-            from: "Purple Nights <tickets@dinner.bidiigirlsprogramme.org>",
+            from: "Womens Day Dinner <tickets@dinner.bidiigirlsprogramme.org>",
             to: [order.email],
-            subject: `🎟 Your Ticket for Purple Nights — ${order.ticket_id}`,
+            subject: `🎟 Your Ticket for Womens Day Dinner — ${order.ticket_id}`,
             html: ticketHtml,
           });
           console.log(`Ticket email sent to ${order.email}`);

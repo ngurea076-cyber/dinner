@@ -142,6 +142,16 @@
     box-shadow: 0 6px 30px hsl(274 90% 50% / 0.6);
   }
 
+  .no-glow {
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .no-glow:hover {
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
   .card-event {
     @apply bg-card text-card-foreground rounded-2xl p-6;
   }

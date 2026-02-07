@@ -24,31 +24,22 @@ const HeroSection = () => {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="floating-pill mb-8 animate-float"
           >
-            ✨ Valentine's Edition
+            ✨ Womens Day Dinner
           </motion.div>
 
           <h1 className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black uppercase tracking-tight text-foreground purple-glow-text leading-none mb-6">
-            Purple
+            Womens
             <br />
-            Nights
+            Day Dinner
           </h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-muted-foreground text-lg sm:text-xl md:text-2xl font-body mb-4 max-w-2xl mx-auto"
-          >
-            An unforgettable night of love, music & luxury vibes
-          </motion.p>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
             className="flex items-center justify-center gap-4 mb-10"
           >
-            <span className="floating-pill">📅 Feb 14, 2026</span>
+            <span className="floating-pill">📅 Mar 7, 2026</span>
             <span className="floating-pill">🕘 8:00 PM</span>
           </motion.div>
 

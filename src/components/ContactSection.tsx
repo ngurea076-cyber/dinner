@@ -11,14 +11,14 @@ const contacts = [
   {
     icon: Mail,
     label: "Email",
-    value: "info@purplenights.co.ke",
-    href: "mailto:info@purplenights.co.ke",
+    value: "info@womensdaydinner.co.ke",
+    href: "mailto:info@womensdaydinner.co.ke",
   },
   {
     icon: MessageCircle,
     label: "WhatsApp",
-    value: "Chat with us",
-    href: "https://wa.me/254712345678?text=Hi!%20I%27m%20interested%20in%20Purple%20Nights",
+    value: "+254 739 804 285",
+    href: "https://wa.me/254739804285?text=Hi!%20I%27m%20interested%20in%20Womens%20Day%20Dinner",
   },
 ];
 
@@ -83,7 +83,7 @@ const ContactSection = () => {
         </motion.div>
 
         <p className="text-muted-foreground/50 text-sm mt-12">
-          © 2026 Purple Nights. All rights reserved.
+          © 2026 Womens Day Dinner. All rights reserved.
         </p>
       </div>
     </section>

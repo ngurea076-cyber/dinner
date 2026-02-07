@@ -11,34 +11,23 @@ const AboutPage = () => {
           className="card-event purple-glow-border p-8 sm:p-12"
         >
           <h1 className="font-display text-3xl sm:text-4xl font-bold text-card-foreground mb-6">
-            About Purple Nights
+            About Womens Day Dinner
           </h1>
           <div className="space-y-4 text-muted-foreground/80 leading-relaxed">
             <p>
-              Purple Nights is a premium event experience brought to you by{" "}
-              <a
-                href="https://bidiigirlsprogramme.org"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary font-medium hover:underline"
-              >
-                Bidii Girls Programme
-              </a>
-              . We curate unforgettable evenings that bring together music, culture, and community.
+              The International Women's Day Dinner hosted by Bidii Girls Programme is an exclusive, high-level gathering bringing together senior women leaders from Kenya's political and corporate spaces, alongside professionals and change-makers committed to advancing women's empowerment.
             </p>
+
             <p>
-              Our Valentine's Edition is the highlight of the year — a night filled with Afrobeats, Amapiano,
-              RnB, and Gengetone, all set in the stunning Grand Rooftop Lounge in Westlands, Nairobi.
+              Guided by the theme "Give to Gain," the evening will feature inspiring guest speakers and meaningful engagements exploring how leadership, mentorship, and intentional giving create lasting personal and societal impact.
             </p>
+
             <p>
-              Whether you're coming solo, as a couple, or VIP, we promise a world-class experience
-              with top DJs, premium drinks, and an atmosphere that's truly electric.
+              Guests can expect an elegant experience, purposeful conversations, and rare opportunities to connect with influential women shaping policy, business, and community development.
             </p>
-            <h2 className="font-display text-xl font-bold text-card-foreground pt-4">Our Mission</h2>
+
             <p>
-              Beyond the music, Purple Nights supports the Bidii Girls Programme — empowering
-              young women through education, mentorship, and community development. Every ticket
-              purchased contributes to creating lasting change.
+              This is more than a dinner — it is a celebration of women, leadership, and collective progress.
             </p>
           </div>
         </motion.div>
