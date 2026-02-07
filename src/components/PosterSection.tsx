@@ -1,14 +1,6 @@
 import { motion } from "framer-motion";
-import { Music, Shirt, MapPin, Phone, Smartphone } from "lucide-react";
+import { MapPin } from "lucide-react";
 import eventPoster from "@/assets/event-poster.jpg";
-
-const eventDetails = [
-  { icon: Music, label: "Music Policy", value: "Afrobeats · Amapiano · RnB · Gengetone" },
-  { icon: Shirt, label: "Dress Code", value: "Smart Casual / All White Allowed" },
-  { icon: MapPin, label: "Venue", value: "The Grand Rooftop Lounge, Westlands, Nairobi" },
-  { icon: Phone, label: "Reservations", value: "+254 712 345 678" },
-  { icon: Smartphone, label: "Lipa na M-Pesa", value: "Paybill: 247247 | Acc: PurpleNights" },
-];
 
 const PosterSection = () => {
   return (
@@ -27,7 +19,7 @@ const PosterSection = () => {
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4 }}
-            className="rounded-xl overflow-hidden mb-8"
+            className="rounded-xl overflow-hidden"
           >
             <img
               src={eventPoster}
@@ -36,31 +28,6 @@ const PosterSection = () => {
               loading="lazy"
             />
           </motion.div>
-
-          {/* Event Details */}
-          <div className="space-y-5">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-card-foreground text-center mb-6">
-              Event Details
-            </h2>
-            {eventDetails.map((detail, index) => (
-              <motion.div
-                key={detail.label}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="flex items-start gap-4 p-4 rounded-xl bg-secondary/50"
-              >
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <detail.icon className="w-5 h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground/70">{detail.label}</p>
-                  <p className="font-semibold text-card-foreground">{detail.value}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
 
         {/* Directions Button */}
