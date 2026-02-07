@@ -99,7 +99,7 @@ const PaymentPending = () => {
               An M-Pesa STK push has been sent to your phone. Please enter your PIN to complete the payment.
             </p>
             <div className="bg-secondary/50 rounded-xl p-4 text-sm text-card-foreground">
-              <p className="font-medium">Ticket ID: <span className="text-primary font-mono">{state.ticketId}</span></p>
+              <p className="font-medium">Name: <span className="text-primary">{state.fullName}</span></p>
               <p className="mt-1">Amount: <span className="font-bold text-primary">KES {state.total.toLocaleString()}</span></p>
             </div>
           </>
