@@ -85,28 +85,29 @@ serve(async (req) => {
     const stkResult = await stkResponse.json();
     console.log("STK push response:", JSON.stringify(stkResult));
 
-    if (!stkResult.success) {
+    const stkSuccess = stkResult.ResponseCode === "0" || stkResult.ResponseCode === 0;
+    if (!stkSuccess) {
       // Update order to failed
       await supabase
         .from("orders")
         .update({ payment_status: "failed" })
         .eq("id", order.id);
-      throw new Error(stkResult.message || "STK push failed");
+      throw new Error(stkResult.ResponseDescription || stkResult.message || "STK push failed");
     }
 
-    // Save checkout_id for tracking
+    const checkoutId = stkResult.CheckoutRequestID || stkResult.checkout_id;
     await supabase
       .from("orders")
-      .update({ checkout_id: stkResult.checkout_id })
+      .update({ checkout_id: checkoutId })
       .eq("id", order.id);
 
-    console.log(`STK push successful, checkout_id: ${stkResult.checkout_id}`);
+    console.log(`STK push successful, checkout_id: ${checkoutId}`);
 
     return new Response(
       JSON.stringify({
         success: true,
         ticketId,
-        checkoutId: stkResult.checkout_id,
+        checkoutId: checkoutId,
         orderId: order.id,
       }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
