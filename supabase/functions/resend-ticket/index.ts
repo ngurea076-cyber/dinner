@@ -68,7 +68,7 @@ serve(async (req) => {
     `;
 
     const { error: emailError } = await resend.emails.send({
-      from: "Purple Nights <onboarding@resend.dev>",
+      from: "Purple Nights <tickets@dinner.bidiigirlsprogramme.org>",
       to: [order.email],
       subject: `🎟 Your Ticket for Purple Nights — ${order.ticket_id}`,
       html: ticketHtml,
