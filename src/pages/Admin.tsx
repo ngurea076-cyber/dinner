@@ -10,6 +10,8 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  Send,
+  Loader2,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -42,6 +44,7 @@ const AdminPage = () => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [page, setPage] = useState(1);
+  const [resendingId, setResendingId] = useState<string | null>(null);
   const perPage = 10;
 
   useEffect(() => {
@@ -102,6 +105,22 @@ const AdminPage = () => {
     a.download = "orders.csv";
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleResendTicket = async (orderId: string) => {
+    setResendingId(orderId);
+    try {
+      const { data, error } = await supabase.functions.invoke("resend-ticket", {
+        body: { orderId },
+      });
+      if (error) throw new Error(error.message);
+      if (!data?.success) throw new Error(data?.error || "Failed to resend");
+      alert(data.message || "Ticket sent successfully!");
+    } catch (err: any) {
+      alert("Failed to resend ticket: " + (err.message || "Unknown error"));
+    } finally {
+      setResendingId(null);
+    }
   };
 
   if (!isLoggedIn) {
@@ -198,14 +217,14 @@ const AdminPage = () => {
             <table className="w-full min-w-[700px] text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  {["Ticket ID", "Name", "Email", "Phone", "Qty", "Amount", "Status", "Date"].map((h) => (
+                  {["Ticket ID", "Name", "Email", "Phone", "Qty", "Amount", "Status", "Date", "Actions"].map((h) => (
                     <th key={h} className="text-left py-3 px-3 font-semibold text-muted-foreground/70 text-xs uppercase tracking-wider">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {paginated.length === 0 ? (
-                  <tr><td colSpan={8} className="py-10 text-center text-muted-foreground">No orders found</td></tr>
+                  <tr><td colSpan={9} className="py-10 text-center text-muted-foreground">No orders found</td></tr>
                 ) : paginated.map((o) => (
                   <tr key={o.id} className="border-b border-border/50 hover:bg-secondary/30 transition-colors">
                     <td className="py-3 px-3 font-mono font-medium text-primary text-xs">{o.ticket_id}</td>
@@ -218,6 +237,18 @@ const AdminPage = () => {
                       <span className={`px-2.5 py-1 rounded-full text-xs font-medium capitalize ${statusColors[o.payment_status] || ""}`}>{o.payment_status}</span>
                     </td>
                     <td className="py-3 px-3 text-muted-foreground/80 text-xs">{new Date(o.created_at).toLocaleDateString()}</td>
+                    <td className="py-3 px-3">
+                      {o.payment_status === "paid" && (
+                        <button
+                          onClick={() => handleResendTicket(o.id)}
+                          disabled={resendingId === o.id}
+                          className="text-xs text-primary hover:text-primary/80 font-medium flex items-center gap-1 disabled:opacity-50"
+                        >
+                          {resendingId === o.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Send className="w-3 h-3" />}
+                          Resend
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
