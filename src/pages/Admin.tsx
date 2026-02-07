@@ -668,7 +668,7 @@ const AdminPage = () => {
               {!scannedTicket ? (
                 <>
                   {/* QR Scanner temporarily commented out due to CORS issues */}
-                  {/* <Suspense
+                  <Suspense
                     fallback={
                       <div className="py-10 text-center">
                         Loading scanner...
@@ -681,7 +681,7 @@ const AdminPage = () => {
                       }}
                       onClose={() => setScannerOpen(false)}
                     />
-                  </Suspense> */}
+                  </Suspense>
 
                   <div className="mt-4">
                     <p className="text-sm text-muted-foreground mb-2">
