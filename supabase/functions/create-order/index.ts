@@ -61,16 +61,25 @@ serve(async (req) => {
     console.log(`Order created: ${order.id}, initiating STK push...`);
 
     // Initiate HashPay STK Push
+    const apiKey = Deno.env.get("HASHPAY_API_KEY");
+    const accountId = Deno.env.get("HASHPAY_ACCOUNT_ID");
+    
+    console.log(`HashPay config - API key present: ${!!apiKey}, length: ${apiKey?.length || 0}`);
+    console.log(`HashPay config - Account ID present: ${!!accountId}, value: ${accountId}`);
+
+    const stkPayload = {
+      api_key: apiKey,
+      account_id: accountId,
+      amount: String(totalAmount),
+      msisdn: phone,
+      reference: encodeURIComponent(reference),
+    };
+    console.log("STK payload (without api_key):", JSON.stringify({ ...stkPayload, api_key: "[REDACTED]" }));
+
     const stkResponse = await fetch("https://api.hashback.co.ke/initiatestk", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        api_key: Deno.env.get("HASHPAY_API_KEY"),
-        account_id: Deno.env.get("HASHPAY_ACCOUNT_ID"),
-        amount: String(totalAmount),
-        msisdn: phone,
-        reference: encodeURIComponent(reference),
-      }),
+      body: JSON.stringify(stkPayload),
     });
 
     const stkResult = await stkResponse.json();
