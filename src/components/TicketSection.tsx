@@ -14,13 +14,13 @@ const ticketSchema = z.object({
   email: z.string().trim().email("Invalid email address").max(255),
   phone: z
     .string()
-    .regex(/^254[17]\d{8}$/, "Phone format: 2547XXXXXXXX or 2541XXXXXXXX"),
+    .regex(/^0[17]\d{8}$/, "Phone format: 07XXXXXXXX or 01XXXXXXXX"),
   quantity: z.number().min(1, "Minimum 1 ticket").max(10, "Maximum 10 tickets"),
 });
 
 type TicketFormData = z.infer<typeof ticketSchema>;
 
-const TICKET_PRICE = 1;
+const TICKET_PRICE = 7500;
 
 type TicketSectionProps = {
   compact?: boolean;
@@ -180,7 +180,7 @@ const TicketSection = ({
             name="phone"
             value={form.phone}
             onChange={handleChange}
-            placeholder="2547XXXXXXXX or 2541XXXXXXXX"
+            placeholder="07XXXXXXXX or 01XXXXXXXX"
             className="input-field"
             required
           />

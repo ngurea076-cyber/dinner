@@ -20,11 +20,14 @@ serve(async (req) => {
       throw new Error("Missing required fields");
     }
 
-    if (!/^254[17]\d{8}$/.test(phone)) {
-      throw new Error("Invalid phone format. Use 2547XXXXXXXX or 2541XXXXXXXX");
+    if (!/^0[17]\d{8}$/.test(phone)) {
+      throw new Error("Invalid phone format. Use 07XXXXXXXX or 01XXXXXXXX");
     }
 
-    const ticketPrice = 1;
+    // Convert 07 or 01 format to 2547 or 2541 for M-Pesa
+    const formattedPhone = phone.replace(/^0/, "254");
+
+    const ticketPrice = 7500;
     const totalAmount = ticketPrice * quantity;
     const ticketId = crypto.randomUUID().split("-")[0].toUpperCase();
     const qrCode = crypto.randomUUID();
@@ -79,7 +82,7 @@ serve(async (req) => {
       api_key: apiKey,
       account_id: accountId,
       amount: String(totalAmount),
-      msisdn: phone,
+      msisdn: formattedPhone,
       reference: encodeURIComponent(reference),
     };
     console.log(
