@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { CheckCircle, Home, Download } from "lucide-react";
+import { CheckCircle, Home, Mail } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SuccessPage = () => {
@@ -45,9 +45,15 @@ const SuccessPage = () => {
         <h1 className="font-display text-3xl font-bold text-card-foreground mb-2">
           Payment Successful 🎉
         </h1>
-        <p className="text-muted-foreground/80 mb-8">
+        <p className="text-muted-foreground/80 mb-3">
           Your ticket has been confirmed!
         </p>
+        <div className="flex items-center justify-center gap-2 text-primary mb-8 bg-primary/10 rounded-lg py-3 px-4">
+          <Mail className="w-4 h-4" />
+          <p className="text-sm font-medium">
+            Your ticket has been sent to your email
+          </p>
+        </div>
 
         <div className="space-y-3 text-left bg-secondary/50 rounded-xl p-5 mb-8">
           <div className="flex justify-between">
@@ -74,26 +80,16 @@ const SuccessPage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="btn-primary flex-1 flex items-center justify-center gap-2"
-          >
-            <Download className="w-4 h-4" />
-            Download Ticket
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => navigate("/")}
-            className="flex-1 px-6 py-4 rounded-xl border border-primary text-primary font-semibold
-                       hover:bg-primary/5 transition-colors flex items-center justify-center gap-2"
-          >
-            <Home className="w-4 h-4" />
-            Back to Home
-          </motion.button>
-        </div>
+        <motion.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
+          onClick={() => navigate("/")}
+          className="w-full px-6 py-4 rounded-xl border border-primary text-primary font-semibold
+                     hover:bg-primary/5 transition-colors flex items-center justify-center gap-2"
+        >
+          <Home className="w-4 h-4" />
+          Back to Home
+        </motion.button>
       </motion.div>
     </div>
   );
