@@ -8,23 +8,12 @@ const ticketSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
   email: z.string().trim().email("Invalid email address").max(255),
   phone: z.string().regex(/^2547\d{8}$/, "Phone format: 2547XXXXXXXX"),
-  ticketType: z.enum(["single", "couple", "vip"]),
   quantity: z.number().min(1, "Minimum 1 ticket").max(10, "Maximum 10 tickets"),
 });
 
 type TicketFormData = z.infer<typeof ticketSchema>;
 
-const PRICES: Record<string, number> = {
-  single: 1500,
-  couple: 2500,
-  vip: 5000,
-};
-
-const TICKET_LABELS: Record<string, string> = {
-  single: "Single — KES 1,500",
-  couple: "Couple — KES 2,500",
-  vip: "VIP — KES 5,000",
-};
+const TICKET_PRICE = 7500;
 
 const TicketSection = () => {
   const navigate = useNavigate();
@@ -32,18 +21,14 @@ const TicketSection = () => {
     fullName: "",
     email: "",
     phone: "",
-    ticketType: "single",
     quantity: 1,
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
-  const total = useMemo(
-    () => PRICES[form.ticketType] * form.quantity,
-    [form.ticketType, form.quantity]
-  );
+  const total = useMemo(() => TICKET_PRICE * form.quantity, [form.quantity]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
@@ -66,8 +51,6 @@ const TicketSection = () => {
     }
 
     setLoading(true);
-
-    // Simulate payment processing
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const ticketId = crypto.randomUUID().split("-")[0].toUpperCase();
@@ -75,7 +58,7 @@ const TicketSection = () => {
       state: {
         ticketId,
         fullName: form.fullName,
-        ticketType: form.ticketType,
+        ticketType: "single",
         quantity: form.quantity,
         total,
       },
@@ -96,8 +79,11 @@ const TicketSection = () => {
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground text-center mb-2 purple-glow-text">
             Get Your Ticket
           </h2>
-          <p className="text-muted-foreground text-center mb-10">
+          <p className="text-muted-foreground text-center mb-2">
             Secure your spot for the biggest night of the year
+          </p>
+          <p className="text-center text-foreground font-semibold mb-10">
+            Single Ticket — KES 7,500
           </p>
 
           <form onSubmit={handleSubmit} className="card-event purple-glow-border space-y-5">
@@ -142,21 +128,6 @@ const TicketSection = () => {
                 required
               />
               {errors.phone && <p className="text-destructive text-sm mt-1">{errors.phone}</p>}
-            </div>
-
-            {/* Ticket Type */}
-            <div>
-              <label className="block text-sm font-medium text-card-foreground mb-1.5">Ticket Type</label>
-              <select
-                name="ticketType"
-                value={form.ticketType}
-                onChange={handleChange}
-                className="input-field"
-              >
-                {Object.entries(TICKET_LABELS).map(([key, label]) => (
-                  <option key={key} value={key}>{label}</option>
-                ))}
-              </select>
             </div>
 
             {/* Quantity */}
