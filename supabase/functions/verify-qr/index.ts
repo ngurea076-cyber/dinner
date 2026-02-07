@@ -18,8 +18,10 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const qr = body?.qr;
-    const ticketId = body?.ticketId?.trim();
+    const rawQr = body?.qr ?? body?.qrData ?? body?.qr_code ?? body?.qrCode;
+    const qr = typeof rawQr === "string" ? rawQr.trim() : undefined;
+    const ticketIdRaw = body?.ticketId ?? body?.ticket_id ?? body?.ticketID;
+    const ticketId = typeof ticketIdRaw === "string" ? ticketIdRaw.trim() : undefined;
     const mark = body?.mark === true;
     if (!qr && !ticketId)
       return new Response(
