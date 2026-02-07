@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { MapPin } from "lucide-react";
 import eventPoster from "@/assets/event-poster.jpg";
 
 const PosterSection = () => {
@@ -15,7 +14,6 @@ const PosterSection = () => {
           transition={{ duration: 0.7 }}
           className="card-event purple-glow-border overflow-hidden"
         >
-          {/* Poster Image */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4 }}
@@ -28,30 +26,6 @@ const PosterSection = () => {
               loading="lazy"
             />
           </motion.div>
-        </motion.div>
-
-        {/* Directions Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="text-center mt-8"
-        >
-          <a
-            href="https://maps.google.com/?q=The+Grand+Rooftop+Lounge+Westlands+Nairobi"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <motion.button
-              className="btn-primary inline-flex items-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <MapPin className="w-5 h-5" />
-              Get Directions
-            </motion.button>
-          </a>
         </motion.div>
       </div>
     </section>
