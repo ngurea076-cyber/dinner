@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { supabase } from "@/integrations/supabase/client";
 
 const ticketSchema = z.object({
   fullName: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -25,6 +26,7 @@ const TicketSection = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const total = useMemo(() => TICKET_PRICE * form.quantity, [form.quantity]);
 
@@ -35,6 +37,7 @@ const TicketSection = () => {
       [name]: name === "quantity" ? Math.max(1, Math.min(10, parseInt(value) || 1)) : value,
     }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
+    setApiError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,18 +54,37 @@ const TicketSection = () => {
     }
 
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setApiError("");
 
-    const ticketId = crypto.randomUUID().split("-")[0].toUpperCase();
-    navigate("/success", {
-      state: {
-        ticketId,
-        fullName: form.fullName,
-        ticketType: "single",
-        quantity: form.quantity,
-        total,
-      },
-    });
+    try {
+      const { data, error } = await supabase.functions.invoke("create-order", {
+        body: {
+          fullName: form.fullName,
+          email: form.email,
+          phone: form.phone,
+          quantity: form.quantity,
+        },
+      });
+
+      if (error) throw new Error(error.message);
+      if (!data?.success) throw new Error(data?.error || "Failed to create order");
+
+      // Navigate to waiting page with payment details
+      navigate("/payment-pending", {
+        state: {
+          ticketId: data.ticketId,
+          checkoutId: data.checkoutId,
+          fullName: form.fullName,
+          quantity: form.quantity,
+          total,
+        },
+      });
+    } catch (err: any) {
+      console.error("Payment error:", err);
+      setApiError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -87,7 +109,12 @@ const TicketSection = () => {
           </p>
 
           <form onSubmit={handleSubmit} className="card-event purple-glow-border space-y-5">
-            {/* Full Name */}
+            {apiError && (
+              <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/30 text-destructive text-sm">
+                {apiError}
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-card-foreground mb-1.5">Full Name</label>
               <input
@@ -101,7 +128,6 @@ const TicketSection = () => {
               {errors.fullName && <p className="text-destructive text-sm mt-1">{errors.fullName}</p>}
             </div>
 
-            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-card-foreground mb-1.5">Email</label>
               <input
@@ -116,7 +142,6 @@ const TicketSection = () => {
               {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
             </div>
 
-            {/* Phone */}
             <div>
               <label className="block text-sm font-medium text-card-foreground mb-1.5">Phone Number</label>
               <input
@@ -130,7 +155,6 @@ const TicketSection = () => {
               {errors.phone && <p className="text-destructive text-sm mt-1">{errors.phone}</p>}
             </div>
 
-            {/* Quantity */}
             <div>
               <label className="block text-sm font-medium text-card-foreground mb-1.5">Quantity</label>
               <input
@@ -145,7 +169,6 @@ const TicketSection = () => {
               {errors.quantity && <p className="text-destructive text-sm mt-1">{errors.quantity}</p>}
             </div>
 
-            {/* Total */}
             <div className="pt-4 border-t border-border">
               <div className="flex justify-between items-center">
                 <span className="text-card-foreground font-medium">Total</span>
@@ -155,7 +178,6 @@ const TicketSection = () => {
               </div>
             </div>
 
-            {/* Submit */}
             <motion.button
               type="submit"
               disabled={loading}
@@ -166,7 +188,7 @@ const TicketSection = () => {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Processing...
+                  Initiating Payment...
                 </>
               ) : (
                 "🟣 Pay with M-Pesa"

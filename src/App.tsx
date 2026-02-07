@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import WhatsAppButton from "./components/WhatsAppButton";
 import Index from "./pages/Index";
 import About from "./pages/About";
+import PaymentPending from "./pages/PaymentPending";
 import Success from "./pages/Success";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
@@ -24,6 +25,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
+          <Route path="/payment-pending" element={<PaymentPending />} />
           <Route path="/success" element={<Success />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="*" element={<NotFound />} />

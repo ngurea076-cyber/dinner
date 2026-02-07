@@ -14,7 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      orders: {
+        Row: {
+          checkout_id: string | null
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          payment_status: string
+          phone: string
+          qr_code: string | null
+          quantity: number
+          ticket_id: string
+          ticket_type: string
+          total_amount: number
+          transaction_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          checkout_id?: string | null
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          payment_status?: string
+          phone: string
+          qr_code?: string | null
+          quantity?: number
+          ticket_id: string
+          ticket_type?: string
+          total_amount: number
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          checkout_id?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          payment_status?: string
+          phone?: string
+          qr_code?: string | null
+          quantity?: number
+          ticket_id?: string
+          ticket_type?: string
+          total_amount?: number
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
