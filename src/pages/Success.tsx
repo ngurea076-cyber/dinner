@@ -57,10 +57,6 @@ const SuccessPage = () => {
 
         <div className="space-y-3 text-left bg-secondary/50 rounded-xl p-5 mb-8">
           <div className="flex justify-between">
-            <span className="text-muted-foreground/70 text-sm">Ticket ID</span>
-            <span className="font-mono font-bold text-primary">{state.ticketId}</span>
-          </div>
-          <div className="flex justify-between">
             <span className="text-muted-foreground/70 text-sm">Name</span>
             <span className="text-card-foreground font-medium">{state.fullName}</span>
           </div>
