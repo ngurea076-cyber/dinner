@@ -14,7 +14,7 @@ const ticketSchema = z.object({
 
 type TicketFormData = z.infer<typeof ticketSchema>;
 
-const TICKET_PRICE = 7500;
+const TICKET_PRICE = 1;
 
 const TicketSection = () => {
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ const TicketSection = () => {
             Secure your spot for the biggest night of the year
           </p>
           <p className="text-center text-foreground font-semibold mb-10">
-            Single Ticket — KES 7,500
+            Single Ticket — KES 1
           </p>
 
           <form onSubmit={handleSubmit} className="card-event purple-glow-border space-y-5">
