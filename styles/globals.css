@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 270 100% 4%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 270 100% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 100% 20%;
+
+    --primary: 274 90% 37%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 274 90% 37%;
+
+    --muted: 270 30% 15%;
+    --muted-foreground: 270 20% 70%;
+
+    --accent: 280 80% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 30% 25%;
+    --input: 270 30% 20%;
+    --ring: 274 90% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 270 100% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 274 90% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 50% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 270 30% 20%;
+    --sidebar-ring: 274 90% 50%;
+
+    /* Custom tokens */
+    --purple-glow: 274 90% 50%;
+    --deep-violet: 280 100% 25%;
+    --gradient-start: 274 90% 37%;
+    --gradient-end: 280 100% 20%;
+  }
+
+  .dark {
+    --background: 270 100% 4%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 270 100% 20%;
+    --popover: 270 50% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 274 90% 37%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 274 90% 37%;
+    --muted: 270 30% 15%;
+    --muted-foreground: 270 20% 70%;
+    --accent: 280 80% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 270 30% 25%;
+    --input: 270 30% 20%;
+    --ring: 274 90% 50%;
+    --sidebar-background: 270 100% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 274 90% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 50% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 270 30% 15%;
+    --sidebar-ring: 274 90% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .gradient-bg {
+    background: linear-gradient(
+      135deg,
+      hsl(274 90% 37%) 0%,
+      hsl(280 100% 20%) 50%,
+      hsl(270 100% 10%) 100%
+    );
+  }
+
+  .gradient-bg-hero {
+    background: linear-gradient(
+      180deg,
+      hsl(274 90% 25%) 0%,
+      hsl(280 100% 15%) 40%,
+      hsl(270 100% 6%) 100%
+    );
+  }
+
+  .purple-glow {
+    box-shadow: 0 0 40px hsl(274 90% 50% / 0.3),
+                0 0 80px hsl(274 90% 50% / 0.15);
+  }
+
+  .purple-glow-border {
+    box-shadow: 0 0 20px hsl(274 90% 50% / 0.25),
+                0 8px 32px hsl(270 100% 10% / 0.4);
+    border: 1px solid hsl(274 90% 50% / 0.3);
+  }
+
+  .purple-glow-text {
+    text-shadow: 0 0 20px hsl(274 90% 50% / 0.5),
+                 0 0 40px hsl(274 90% 50% / 0.3);
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground font-semibold rounded-xl px-8 py-4
+           transition-all duration-300 hover:scale-105
+           focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    box-shadow: 0 4px 20px hsl(274 90% 50% / 0.4);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 6px 30px hsl(274 90% 50% / 0.6);
+  }
+
+  .no-glow {
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .no-glow:hover {
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .card-event {
+    @apply bg-card text-card-foreground rounded-2xl p-6;
+  }
+
+  .section-dark {
+    @apply bg-background text-foreground;
+  }
+
+  .floating-pill {
+    @apply inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold;
+    background: hsl(274 90% 50% / 0.2);
+    border: 1px solid hsl(274 90% 50% / 0.4);
+    color: hsl(274 90% 80%);
+    backdrop-filter: blur(10px);
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border bg-secondary text-secondary-foreground
+           placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary
+           transition-all duration-200;
+  }
+
+  .admin-card {
+    @apply bg-card rounded-2xl p-6 shadow-lg;
+    border: 1px solid hsl(270 20% 90%);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(270 100% 6%);
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(274 90% 37%);
+  border-radius: 4px;
+}
